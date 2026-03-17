@@ -1,6 +1,7 @@
 enum class Genre {
 
-    SPELL,
+    FANTASY,
+    DARK_ARTS,
     HISTORY,
     ALCHEMY
 }
