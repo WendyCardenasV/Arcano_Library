@@ -11,7 +11,8 @@ class InMemoryLibraryRepository : LibraryRepository {
         items.add(item)
     }
 
-    // NUEVO: Busca un ítem en la lista por su ID
+    //
+    //Search for an item in the list by its ID
     override suspend fun getItem(id: Int): MagicItem? {
         return items.find { it.id == id }
     }
@@ -32,7 +33,7 @@ class InMemoryLibraryRepository : LibraryRepository {
         delay(500)
         val index = items.indexOfFirst { it.id == item.id }
         if (index != -1) {
-            items[index] = item // Reemplaza el ítem viejo por el nuevo
+            items[index] = item //  Replace the old item with the new one
         }
     }
 }

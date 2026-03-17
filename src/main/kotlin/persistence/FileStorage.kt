@@ -9,12 +9,12 @@ class FileStorage(private val filePath: String = "biblioteca.txt") : LibraryRepo
     private val file = File(filePath)
 
     init {
-        // Crea el archivo físico si no existe en tu computadora
+        // create the archive
         if (!file.exists()) file.createNewFile()
     }
 
     override suspend fun addItem(item: MagicItem) {
-        delay(1000) // Simulación asíncrona exigida por el taller
+        delay(1000) // Asynchronous simulation
         val currentItems = getAll().toMutableList()
         currentItems.add(item)
         saveAll(currentItems)
@@ -44,7 +44,7 @@ class FileStorage(private val filePath: String = "biblioteca.txt") : LibraryRepo
         delay(1000)
         if (!file.exists()) return emptyList()
 
-        // Lee el archivo de texto y reconstruye los objetos mágicos
+        // Read the text file and reconstruct the objects
         return file.readLines().mapNotNull { line ->
             val parts = line.split("|")
             if (parts.size < 3) return@mapNotNull null
@@ -62,7 +62,7 @@ class FileStorage(private val filePath: String = "biblioteca.txt") : LibraryRepo
         }
     }
 
-    // Función privada que convierte la lista en texto para guardarla
+    // Private function that converts the list to text for saving.
     private fun saveAll(items: List<MagicItem>) {
         val lines = items.map {
             when (it) {

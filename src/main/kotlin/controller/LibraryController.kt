@@ -21,7 +21,6 @@ class LibraryController(private val repository: LibraryRepository) {
         state = state.copy(items = items, isLoading = false)
     }
 
-    // NUEVO: La lógica de uso solicitada en el documento
     suspend fun useItem(id: Int) {
         state = state.copy(isLoading = true, errorMessage = null)
         val item = repository.getItem(id)
@@ -29,16 +28,16 @@ class LibraryController(private val repository: LibraryRepository) {
         if (item != null) {
             when (item) {
                 is Scroll -> {
-                    // Requisito cumplido: El pergamino tiene un solo uso y se destruye
+                    // Scroll has only one use and is destroyed
                     repository.deleteItem(id)
                 }
                 is Artifact -> {
-                    // Un artefacto gasta energía al usarse
+                    // A Artifact uses energy when it is used.
                     val newEnergy = (item.energyLevel - 20).coerceAtLeast(0)
                     repository.updateItem(item.copy(energyLevel = newEnergy))
                 }
                 is Book -> {
-                    // Los libros solo se leen, no se gastan
+                    // Books are only read, not used up
                 }
             }
         } else {
