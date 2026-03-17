@@ -20,15 +20,15 @@ fun main() = runBlocking {
             "1" -> {
                 print("Type (Book/Scroll/Artifact): ")
                 val type = readlnOrNull()?.trim() ?: ""
-                print("Name: ")
-                val name = readlnOrNull()?.trim() ?: ""
-
+                var name = ""
                 var pages = 0
                 var genre = Genre.FANTASY
                 var energy = 0
 
                 when (type.lowercase()) {
                     "libro", "book" -> {
+                        print("Name: ")
+                        name = readlnOrNull()?.trim() ?: ""
                         print("Pages: ")
                         pages = readlnOrNull()?.toIntOrNull() ?: 100
                         print("genre (FANTASY, DARK_ARTS, HISTORY, ALCHEMY): ")
