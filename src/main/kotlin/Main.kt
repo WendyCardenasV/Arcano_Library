@@ -10,7 +10,7 @@ fun main() = runBlocking {
     val controller = LibraryController(repository)
     val factory = ItemFactory()
 
-    println("--- WELOCOME TO THE ARCANO LIBRARY ---")
+    println("--- WELCOME TO THE ARCANO LIBRARY ---")
 
     while (true) {
         println("\n1. add object | 2. See inventory | 3. use an object | 4. Exit")
@@ -81,7 +81,7 @@ fun printState(state: state.LibraryState) {
         println("  \"isLoading\": ${state.isLoading},")
         println("  \"items\": [")
 
-        // REQUISITO CUMPLIDO: Cast inteligente para mostrar propiedades específicas de cada hijo
+
         state.items.forEach { item ->
             val details = when (item) {
                 is model.Book -> "\"type\": \"Libro\", \"Pages\": ${item.pages}, \"\"genre: \"${item.genre}\""
@@ -92,8 +92,8 @@ fun printState(state: state.LibraryState) {
         }
 
         println("  ],")
-        val mensajeFinal = state.errorMessage ?: "SUCCESSFUL "
-        println("  \"message\": \"$mensajeFinal\"")
+        val finalMessage = state.errorMessage ?: "SUCCESSFUL "
+        println("  \"message\": \"$finalMessage\"")
         println("}")
     }
 }
