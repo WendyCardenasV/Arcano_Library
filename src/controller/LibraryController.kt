@@ -1,13 +1,23 @@
+
 class LibraryController(private val repository: LibraryRepository) {
     var state = LibraryState()
-        private set
+        private set // Solo el controlador puede modificar el estado
 
     suspend fun addItem(item: MagicItem) {
-        state = state.copy(isLoading = true) // Primero mostramos que está cargando
+        state = state.copy(isLoading = true, errorMessage = null)
 
-        repository.addItem(item) // Operación pesada
+        try {
+            repository.addItem(item)
+            val currentItems = repository.getAll()
+            state = state.copy(items = currentItems, isLoading = false)
+        } catch (e: Exception) {
+            state = state.copy(isLoading = false, errorMessage = "Error: ${e.message}")
+        }
+    }
 
-        val updatedList = repository.getAll()
-        state = LibraryState(items = updatedList, isLoading = false) // Actualizamos con la lista nueva
+    suspend fun loadInventory() {
+        state = state.copy(isLoading = true)
+        val currentItems = repository.getAll()
+        state = state.copy(items = currentItems, isLoading = false)
     }
 }
