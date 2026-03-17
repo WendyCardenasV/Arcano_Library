@@ -2,33 +2,33 @@ import controller.LibraryController
 import factory.ItemFactory
 import repository.InMemoryLibraryRepository
 import kotlinx.coroutines.runBlocking
-import model.MagicItem
+
 
 fun main() = runBlocking {
     val repository = InMemoryLibraryRepository()
     val controller = LibraryController(repository)
     val factory = ItemFactory()
 
-    println("--- BIENVENIDA AL ARCHIVO ARCANO, WENDY ---")
+    println("--- WELCOME TO THE ARCANO LIBRARY---")
 
     while (true) {
-        println("\n1. Agregar Ítem | 2. Ver Inventario | 3. Salir")
-        print("> Seleccione: ")
+        println("\n1. Add item | 2. see inventory | 3. Exit")
+        print(" Select: ")
 
         when (readlnOrNull()) {
             "1" -> {
-                print("Tipo (Libro/Pergamino/Artefacto): ")
+                print("Type (Book/Scroll/Artifact): ")
                 val type = readlnOrNull() ?: ""
-                print("Nombre: ")
+                print("Name: ")
                 val name = readlnOrNull() ?: ""
 
                 val newItem = factory.create(type, name)
                 if (newItem != null) {
-                    println("[SISTEMA]: Procesando acción 'ADD_ITEM'...")
+                    println("[SYSTEM]: loading action 'ADD_ITEM'...")
                     controller.addItem(newItem)
                     printState(controller.state)
                 } else {
-                    println("❌ Tipo no reconocido.")
+                    println(" Type not recognized.")
                 }
             }
             "2" -> {
@@ -36,20 +36,20 @@ fun main() = runBlocking {
                 printState(controller.state)
             }
             "3" -> break
-            else -> println("Opción no válida.")
+            else -> println("Not valid Option.")
         }
     }
 }
 
 fun printState(state: state.LibraryState) {
     if (state.isLoading) {
-        println("⏳ Cargando datos mágicos...")
+        println("Loading magic data...")
     } else {
-        println("\n[ESTADO ACTUALIZADO]:")
+        println("\n[STATE UPDATED]:")
         println("{")
         println("  \"isLoading\": ${state.isLoading},")
-        println("  \"items\": ${state.items.map { "{\"id\": ${it.id}, \"nombre\": \"${it.name}\"}" }},")
-        println("  \"mensaje\": \"Operación exitosa\"")
+        println("  \"items\": ${state.items.map { "{\"id\": ${it.id}, \"name\": \"${it.name}\"}" }},")
+        println("  \"message\": \"SUCCESSFUL\"")
         println("}")
     }
 }

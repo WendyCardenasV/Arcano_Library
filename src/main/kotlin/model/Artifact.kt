@@ -3,5 +3,5 @@ package model
 data class Artifact(
     override val id: Int,
     override val name: String,
-    val energy: Int
+    val energyLevel: Int
 ):MagicItem()
